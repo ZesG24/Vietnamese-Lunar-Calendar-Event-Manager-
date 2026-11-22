@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Reminders & Notifications permissions -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app_logo"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Glance Widget Receiver -->
+        <receiver
+            android:name=".widget.AmLichGlanceReceiver"
+            android:exported="true"
+            android:label="Lịch Âm &amp; Sự Kiện Widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/am_lich_widget_info" />
+        </receiver>
+
+        <!-- 1. Glance Month Calendar Widget 4x4 Sáng -->
+        <receiver
+            android:name=".widget.MonthCalendarLightReceiver"
+            android:exported="true"
+            android:label="Lịch tháng (Sáng)">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/month_calendar_light_widget_info" />
+        </receiver>
+
+        <!-- 2. Glance Month Calendar Widget 4x4 Tối -->
+        <receiver
+            android:name=".widget.MonthCalendarDarkReceiver"
+            android:exported="true"
+            android:label="Lịch tháng (Tối)">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/month_calendar_dark_widget_info" />
+        </receiver>
+
+        <!-- 3. Glance Month Calendar Widget 4x4 Trong Suốt -->
+        <receiver
+            android:name=".widget.MonthCalendarGlassReceiver"
+            android:exported="true"
+            android:label="Lịch tháng (Trong suốt)">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/month_calendar_glass_widget_info" />
+        </receiver>
+
+        <!-- Boot Receiver for WorkManager/Alarm rescheduling -->
+        <receiver
+            android:name=".reminder.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
